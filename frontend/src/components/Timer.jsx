@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Circle } from 'rc-progress';
 import { useTimerStore } from "../store/useTimerStore"
+import {Howl} from 'howler';
+import Alarm from "../assets/alarm.mp3";
 
 export const Timer = () => {
     const { timerType, setTimerType, workHours, workMinutes, restHours, restMinutes } = useTimerStore();
@@ -11,21 +13,33 @@ export const Timer = () => {
       
         return hours * 3600 + minutes * 60;
       });
-    
-    const [timerTime, setTimerTime] = useState(timeLeft);
+
+    const [startTime, setStartTime] = useState(timeLeft);
       
     useEffect(() => {
         const hours = timerType === "work" ? workHours : restHours;
         const minutes = timerType === "work" ? workMinutes : restMinutes;
       
         const newTime = hours * 3600 + minutes * 60;
-        setTimerTime(newTime);
+        setStartTime(newTime);
         setTimeLeft(newTime);
       }, [timerType, workHours, workMinutes, restHours, restMinutes]);
 
 
     const [isRunning, setIsRunning] = useState(false);
 
+    var alarm = new Howl({
+        src: [Alarm]
+      });
+
+    useEffect(() => {
+        if (timeLeft === 0 && isRunning) {
+            alarm.play();
+            setIsRunning(false);
+            setTimerType();
+        }
+    }, [timeLeft]);
+    
     useEffect(() => {
         if (!isRunning || timeLeft <= 0) return;
     
@@ -39,13 +53,13 @@ export const Timer = () => {
             });
     
             setPercentage(() => {
-                return ((timerTime - (timeLeft - 1)) / timerTime) * 100;
+                return ((startTime - (timeLeft - 1)) / startTime) * 100;
             });
     
         }, 1000);
     
         return () => clearInterval(timer);
-    }, [isRunning, timeLeft, timerTime]); 
+    }, [isRunning, timeLeft, startTime]); 
     
 
     const formatTime = (seconds) => {
@@ -77,6 +91,17 @@ export const Timer = () => {
         className="btn m-1"
       >
         {isRunning ? "Stop Timer" : "Start Timer"}
+      </button>
+      <button
+        onClick={() => {
+            setTimeLeft(startTime);
+            setPercentage(0);
+          }}
+          
+        className="btn m-1"
+        disabled={isRunning}
+      >
+        Reset Timer
       </button>
       <button
         onClick={() => setTimerType()}
