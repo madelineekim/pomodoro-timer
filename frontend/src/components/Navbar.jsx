@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { Clock, Settings } from "lucide-react"
+import { Clock, Settings, User} from "lucide-react"
+import { useAuthStore } from '../store/useAuthStore'
 
 const Navbar = () => {
+  const { authUser } = useAuthStore();
   return (
   <header
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
@@ -24,6 +26,12 @@ const Navbar = () => {
               className="btn btn-sm gap-2 transition-colors">
                 <Settings className="w-4 h-4" />
               <span className="hidden sm:inline">Settings</span>
+            </Link>
+            <Link
+              to={authUser ? "/user" : "/login"}
+              className="btn btn-sm gap-2 transition-colors">
+                <User className="w-4 h-4" />
+              <span className="hidden sm:inline">{authUser ? "Dashboard" : "Login"}</span>
             </Link>
             </div>
         </div>

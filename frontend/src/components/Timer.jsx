@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Circle } from 'rc-progress';
-import { useTimerStore } from "../store/useTimerStore"
+import { timerStore } from "../store/timerStore.js"
 import {Howl} from 'howler';
 import Alarm from "../assets/alarm.mp3";
 
 export const Timer = () => {
-    const { timerType, setTimerType, workHours, workMinutes, restHours, restMinutes } = useTimerStore();
+    const { timerType, setTimerType, workHours, workMinutes, restHours, restMinutes } = timerStore();
     const [percentage, setPercentage] = useState(0);
     const [timeLeft, setTimeLeft] = useState(() => {
         const hours = timerType === "work" ? workHours : restHours;

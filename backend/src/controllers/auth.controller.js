@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
             data: {
                 name: name,
                 email: email,
-                password: hashedPassword,
+                hashedPassword: hashedPassword,
             }
         })
 
@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
       
             res.status(201).json({
               id: newUser.id,
-              name: newUser.fullName,
+              name: newUser.name,
               email: newUser.email,
             });
         }
@@ -48,7 +48,12 @@ export const login = async (req, res) => {
             where: { email },
           });
 
-          const isPasswordCorrect = await bcrypt.compare(password, user.password);
+          if (!user) {
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+
+          const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword);
+
           if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Invalid credentials" });
           }
@@ -57,7 +62,7 @@ export const login = async (req, res) => {
 
           res.status(201).json({
             id: user.id,
-            name: user.fullName,
+            name: user.name,
             email: user.email,
           });
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTimerStore } from "../store/useTimerStore"
 import { Timer } from "../components/Timer"
 
 const TimerPage = () => {

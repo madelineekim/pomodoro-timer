@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTimerStore } from "../store/useTimerStore";
+import { timerStore } from "../store/timerStore.js";
 
 const Settings = () => {
-    const { workHours, workMinutes, restHours, restMinutes, setWorkHours, setWorkMinutes, setRestHours, setRestMinutes } = useTimerStore();
+    const { workHours, workMinutes, restHours, restMinutes, setWorkHours, setWorkMinutes, setRestHours, setRestMinutes } = timerStore();
 
   return (
     <div className="center-div flex flex-col gap-4 justify-center items-center h-screen bg-base-300">
