@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import prisma from "../lib/utils";
+import prisma from "../lib/prisma.js"
 
 export const protectRoute = async (req, res, next) => {
   try {

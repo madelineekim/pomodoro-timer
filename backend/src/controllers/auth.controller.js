@@ -77,6 +77,21 @@ export const logout = (req, res) => {
     }
   };
 
+export const deleteAccount = async (req, res) => {
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        const deletedAccount = await prisma.user.delete({
+            where: {
+              id: req.user.id
+            },
+          })
+          res.status(200).json({ message: "Account deleted" });
+    } catch (error) {
+        console.log("Error in logout controller", error.message);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 export const checkAuth = (req, res) => {
     try {
       res.status(200).json(req.user);
