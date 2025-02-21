@@ -3,9 +3,11 @@ import { Circle } from 'rc-progress';
 import { timerStore } from "../store/timerStore.js"
 import {Howl} from 'howler';
 import Alarm from "../assets/alarm.mp3";
+import { useDataStore } from '../store/useDataStore.js';
 
 export const Timer = () => {
     const { timerType, setTimerType, workHours, workMinutes, restHours, restMinutes } = timerStore();
+    const { addNewData } = useDataStore();
     const [percentage, setPercentage] = useState(0);
     const [timeLeft, setTimeLeft] = useState(() => {
         const hours = timerType === "work" ? workHours : restHours;
@@ -37,6 +39,10 @@ export const Timer = () => {
             alarm.play();
             setIsRunning(false);
             setTimerType();
+            if (timerType == "work") {
+              const timeInHours = startTime / 3600;
+              addNewData(timeInHours)
+            }
         }
     }, [timeLeft]);
     

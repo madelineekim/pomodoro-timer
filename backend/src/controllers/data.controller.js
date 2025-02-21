@@ -32,8 +32,9 @@ export const addNewData = async (req, res) => {
             data: {
                 day: today,
                 hours: req.body,
-                userId: req.user.id,
-                user: req.user
+                user: {
+                    connect: {id: req.user.id}
+                }
             }
         })
         res.status(200).json({ message: "New Data Logged"})

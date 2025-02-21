@@ -16,6 +16,8 @@ export const protectRoute = async (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized - Invalid or Expired Token" });
     }
 
+    console.log(decoded)
+
     if (!decoded?.id) {
       return res.status(401).json({ message: "Unauthorized - Invalid Token Payload" });
     }

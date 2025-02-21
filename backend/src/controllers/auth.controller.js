@@ -27,7 +27,7 @@ export const signup = async (req, res) => {
 
         if (newUser) {
             // generate jwt token here
-            generateToken(newUser.id, res);
+            const token = generateToken(newUser.id, res);
       
             res.status(201).json({
               id: newUser.id,
@@ -58,7 +58,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
           }
 
-          generateToken(user.id, res);
+          const token = generateToken(user.id, res);
 
           res.status(201).json({
             id: user.id,
@@ -74,7 +74,16 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
     try {
-      res.cookie("jwt", "", { maxAge: 0 });
+      console.log("Before clearing:", req.cookies);
+
+      res.clearCookie("jwt", { 
+          httpOnly: true, 
+          sameSite: "strict", 
+          secure: process.env.NODE_ENV === "production",
+          path: "/"
+      });
+      console.log("After clearing:", req.cookies);
+      
       res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
       console.log("Error in logout controller", error.message);
@@ -84,12 +93,16 @@ export const logout = (req, res) => {
 
 export const deleteAccount = async (req, res) => {
     try {
-        res.cookie("jwt", "", { maxAge: 0 });
-        const deletedAccount = await prisma.user.delete({
-            where: {
-              id: req.user.id
-            },
-          })
+        console.log("Before clearing:", req.cookies);
+
+        res.clearCookie("jwt", { 
+            httpOnly: true, 
+            sameSite: "strict", 
+            secure: process.env.NODE_ENV === "production",
+            path: "/"
+        });
+        console.log("After clearing:", req.cookies);
+
           res.status(200).json({ message: "Account deleted" });
     } catch (error) {
         console.log("Error in logout controller", error.message);

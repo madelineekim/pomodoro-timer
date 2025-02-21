@@ -9,6 +9,7 @@ import User from "./pages/User"
 import { Routes, Route, Navigate } from "react-router-dom"
 import { useAuthStore } from "./store/useAuthStore"
 import { Loader } from "lucide-react"
+import { Toaster } from "react-hot-toast"
 
 
 
@@ -20,6 +21,8 @@ const App = () => {
   }, [checkAuth]);
 
   console.log({ authUser });
+
+  const authUserExists = !authUser ? false : true;
 
   if(isCheckingAuth && !authUser)
     return (
@@ -36,8 +39,9 @@ const App = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={!authUser ? <LogInPage /> : <Navigate to="/" />} />
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user" element={authUserExists ? <User /> : <Navigate to="/" />} />
       </Routes>
+      <Toaster />
       </div>
   )
 }
