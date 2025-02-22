@@ -41,7 +41,7 @@ export const Timer = () => {
             setTimerType();
             if (timerType == "work") {
               const timeInHours = startTime / 3600;
-              addNewData({ hours: timeInHours })
+              addNewData(timeInHours)
             }
         }
     }, [timeLeft]);

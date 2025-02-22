@@ -83,7 +83,7 @@ export const logout = (req, res) => {
           path: "/"
       });
       console.log("After clearing:", req.cookies);
-      
+
       res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
       console.log("Error in logout controller", error.message);
@@ -103,7 +103,7 @@ export const deleteAccount = async (req, res) => {
         });
         console.log("After clearing:", req.cookies);
 
-          res.status(200).json({ message: "Account deleted" });
+        res.status(200).json({ message: "Account deleted" });
     } catch (error) {
         console.log("Error in logout controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });

@@ -14,12 +14,12 @@ const BarChart = ({ data }) => {
     const marginLeft = 40;
 
     const x = d3.scaleBand()
-      .domain(d3.groupSort(data, ([d]) => -d.frequency, (d) => d.letter)) // descending frequency
+      .domain(d3.groupSort(data, ([d]) => -d.hours, (d) => d.day)) // descending frequency
       .range([marginLeft, width - marginRight])
       .padding(0.1);
 
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, (d) => d.frequency)])
+      .domain([0, d3.max(data, (d) => d.hours)])
       .range([height - marginBottom, marginTop]);
 
     const svg = d3.select(svgRef.current)
@@ -30,7 +30,7 @@ const BarChart = ({ data }) => {
 
     // Add bars
     svg.append("g")
-      .attr("fill", "steelblue")
+      .attr("fill", "#dca54c")
       .selectAll()
       .data(data)
       .join("rect")
@@ -45,17 +45,22 @@ const BarChart = ({ data }) => {
       .attr("transform", `translate(0,${height - marginBottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0));
 
+      const max_hours = data.reduce((max, obj) => (obj.hours > max.hours ? obj : max), data[0]);
+
     // Add y-axis
     svg.append("g")
       .attr("transform", `translate(${marginLeft},0)`)
-      .call(d3.axisLeft(y).tickFormat((y) => (y * 100).toFixed()))
+      .call(d3.axisLeft(y)
+      .ticks(Math.round(max_hours.hours)) // Specify the number of ticks you want
+      .tickFormat((y) => Math.round(y)) // Round to the nearest integer
+      )
       .call(g => g.select(".domain").remove())
       .call(g => g.append("text")
         .attr("x", -marginLeft)
         .attr("y", 10)
         .attr("fill", "currentColor")
         .attr("text-anchor", "start")
-        .text("↑ Frequency (%)"));
+        .text("Hours Worked"));
   }, [data]); // Redraw on data change
 
   return (
