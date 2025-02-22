@@ -1,0 +1,22 @@
+{
+  "name": "pomodoro-app",
+  "version": "1.0.0",
+  "description": "Pomodoro timer react app",
+  "main": "index.js",
+  "scripts": {
+    "build":"",
+    "start":""
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madelineekim/pomodoro-timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madelineekim/pomodoro-timer/issues"
+  },
+  "homepage": "https://github.com/madelineekim/pomodoro-timer#readme"
+}
