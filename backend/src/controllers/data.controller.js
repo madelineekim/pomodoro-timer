@@ -15,7 +15,7 @@ export const getWeekData = async (req, res) => {
             },
             select: {
               hours: true,
-              date: true,
+              day: true,
             },
         })
         res.status(200).json(records);
@@ -31,7 +31,7 @@ export const addNewData = async (req, res) => {
         const newData = await prisma.data.create({
             data: {
                 day: today,
-                hours: req.body,
+                hours: parseInt(req.body.hours, 10),
                 user: {
                     connect: {id: req.user.id}
                 }

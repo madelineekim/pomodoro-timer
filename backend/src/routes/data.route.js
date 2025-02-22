@@ -4,7 +4,7 @@ import { getWeekData, addNewData } from "../controllers/data.controller.js"
 
 const router = express.Router()
 
-router.post("/get-week-data", protectRoute, getWeekData)
+router.get("/get-week-data", protectRoute, getWeekData)
 
 router.post("/add-new-data", protectRoute, addNewData)
 
