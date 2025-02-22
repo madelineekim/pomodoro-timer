@@ -60,7 +60,7 @@ const User = () => {
 
   return (
     <div className="flex justify-center items-center h-screen flex-col bg-base-300">
-      <h1 className="text-2xl font-bold mt-2 mb-10">Your Profile</h1>
+      <h1 className="text-2xl font-bold mt-5">Your Profile</h1>
       <BarChart data={formattedWeekData} />
       <button
         onClick={logout}
