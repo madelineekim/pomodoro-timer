@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const BarChart = ({ data }) => {
+    console.log({data})
   const svgRef = useRef();
 
   useEffect(() => {
@@ -33,10 +34,11 @@ const BarChart = ({ data }) => {
       .selectAll()
       .data(data)
       .join("rect")
-      .attr("x", (d) => x(d.date))
+      .attr("x", (d) => x(d.day))
       .attr("y", (d) => y(d.hours))
       .attr("height", (d) => y(0) - y(d.hours))
       .attr("width", x.bandwidth());
+
 
     // Add x-axis
     svg.append("g")

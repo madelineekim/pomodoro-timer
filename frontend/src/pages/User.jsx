@@ -13,8 +13,6 @@ const User = () => {
     getWeekData();
   }, [getWeekData]);
 
-  console.log({ weekData });
-
   // Condense the list by summing hours for the same date
   const condensedWeekData = (weekData || []).reduce((acc, record) => {
   // Check if the date already exists in the accumulator
@@ -33,7 +31,7 @@ const User = () => {
 
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen flex-col">
       < BarChart data={condensedWeekData} />
       <button onClick={logout} className="px-4 py-2 bg-red-500 text-white rounded">
       Logout
